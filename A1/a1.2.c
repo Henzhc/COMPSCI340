@@ -13,25 +13,47 @@
 #include <time.h>
 #include <pthread.h>
 
+
 const int MAX_SIZE = 4;
 
-struct values {
-  int first;
-  int second;
+struct Data {
+  int **A;
+  int **B;
+  int **C;
+  int start_row;
+  int end_row;
+  int number_columns;
+  int n;
 };
 
-void* matrix_multiply(void* values) {
-  
-  return 0;
-}
+// Perform matrix multiplication
+void* matrix_multiply(void* arg)
+{
+  Data *data = (Data *)arg;
+  int **A = data.A;
+  int **B = data.B;
+  int **C = data.C;
+  int n = data.n;
+  int start = data.start_row;
+  int end = data.end_row;
 
+  for (int i = 0; i < end; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      C[i][j] = 0;
+      for (int k = 0; k < n; k++)
+      {
+        C[i][j] += A[i][k] * B[k][j];
+      }
+    }
+  }
+
+  pthread_exit(NULL);
+}
 
 int main(int argc, char *argv[])
 {
-  pthread_t thread_id;
-  int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);
-  phtread_join(thread_id, NULL);
-
   if (argc < 2)
   {
     printf("Usage: %s [matrix_size] [optional_seed]\n", argv[0]);
@@ -45,7 +67,6 @@ int main(int argc, char *argv[])
   {
     seed = atoi(argv[2]);
   }
-
 
   int **A = (int **)calloc(n, sizeof(int *));
   int **B = (int **)calloc(n, sizeof(int *));
@@ -99,4 +120,28 @@ int main(int argc, char *argv[])
       printf("\n");
     }
   }
+  
+  if (n <= MAX_SIZE)
+  {
+    // Print the result matrix
+    printf("\nResultant matrix is: \n");
+    for (int i = 0; i < n; i++)
+    {
+      for (int j = 0; j < n; j++)
+      {
+        printf("%d ", C[i][j]);
+      }
+      printf("\n");
+    }
+  }
+
+  pthread_create(&)
+
+  free(A);
+  free(B);
+  free(C);
+
+  printf("\nSUCCESSFULLY DONE\n");
+  
+  return 0;
 }
