@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
   }
 
 
+
+
   // Initialize input matrices with random values
   if (n <= MAX_SIZE)
   {
@@ -84,8 +86,8 @@ int main(int argc, char *argv[])
   }
 
   // start the timer
-  struct timespec start, end;
-  clock_gettime(CLOCK_MONOTONIC, &start);
+  // struct timespec start, end;
+  // clock_gettime(CLOCK_MONOTONIC, &start);
   // Perform matrix multiplication
   for (int i = 0; i < n; i++)
   {
@@ -99,9 +101,9 @@ int main(int argc, char *argv[])
     }
   }
   // stop the timer
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-  printf("Time taken: %f seconds\n", time_taken);
+  // clock_gettime(CLOCK_MONOTONIC, &end);
+  // double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+  // printf("Time taken: %f seconds\n", time_taken);
   
   if (n <= MAX_SIZE)
   {

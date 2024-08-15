@@ -11,11 +11,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <pthread.h>
 
 const int MAX_SIZE = 4;
 
+struct values {
+  int first;
+  int second;
+};
+
+void* matrix_multiply(void* values) {
+  
+  return 0;
+}
+
+
 int main(int argc, char *argv[])
 {
+  pthread_t thread_id;
+  int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);
+  phtread_join(thread_id, NULL);
+
   if (argc < 2)
   {
     printf("Usage: %s [matrix_size] [optional_seed]\n", argv[0]);
@@ -30,6 +46,7 @@ int main(int argc, char *argv[])
     seed = atoi(argv[2]);
   }
 
+
   int **A = (int **)calloc(n, sizeof(int *));
   int **B = (int **)calloc(n, sizeof(int *));
   int **C = (int **)calloc(n, sizeof(int *));
@@ -39,8 +56,6 @@ int main(int argc, char *argv[])
     B[i] = (int *)calloc(n, sizeof(int));
     C[i] = (int *)calloc(n, sizeof(int));
   }
-
-
 
 
   // Initialize input matrices with random values
@@ -84,52 +99,4 @@ int main(int argc, char *argv[])
       printf("\n");
     }
   }
-
-  // start the timer
-  struct timespec start, end;
-  clock_gettime(CLOCK_MONOTONIC, &start);
-  // Perform matrix multiplication
-  for (int i = 0; i < n; i++)
-  {
-    for (int j = 0; j < n; j++)
-    {
-      C[i][j] = 0;
-      for (int k = 0; k < n; k++)
-      {
-        C[i][j] += A[i][k] * B[k][j];
-      }
-    }
-  }
-  // stop the timer
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-  printf("Time taken: %f seconds\n", time_taken);
-  
-  if (n <= MAX_SIZE)
-  {
-    // Print the result matrix
-    printf("\nResultant matrix is: \n");
-    for (int i = 0; i < n; i++)
-    {
-      for (int j = 0; j < n; j++)
-      {
-        printf("%d ", C[i][j]);
-      }
-      printf("\n");
-    }
-  }
-
-  for (int i = 0; i < n; i++)
-  {
-    free(A[i]);
-    free(B[i]);
-    free(C[i]);
-  }
-  free(A);
-  free(B);
-  free(C);
-
-  printf("\nSUCCESSFULLY DONE\n");
-  
-  return 0;
 }
